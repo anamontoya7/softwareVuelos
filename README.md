@@ -2,4 +2,4 @@
 # Ana María Montoya Osete
 # Juan Flores Pérez
 # Ricardo Robles Enciso
-# Betzi Mabel Pacha
+# Betzi Mabel Paccha Colala
