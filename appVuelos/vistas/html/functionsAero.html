@@ -38,8 +38,7 @@
 						<nav class="horizontal-nav full-width horizontalNav-notprocessed">
 							<ul class="sf-menu">
 								<li class="current"><a href="../index.html">Vuelos ATM</a></li>
-								<li class="current"><a href="pasajeros.html">Pasajeros</a></li>
-								<li class="current"><a href="aerolineas.html">Aerolineas</a></li>
+								<li class="current"><a href="">CERRAR SESION</a></li>
 							</ul>
 						</nav>
 						<div class="clear"></div>
@@ -78,21 +77,29 @@
 			<div class="container_12">			
 				<div class="clear"></div>
 				<div class="grid_6">
-					<h3>Registrese</h3>
+					<h3>Vuelos</h3>
 					<form id="bookingForm" name="validateForm">
-                        Id:<input type="text" ng-model="idAero" required>
-                        Aerolinea:<input type="text" ng-model="nameAero" required>
-                        Contraseña:<input type="password" ng-model="passAero" required>
-						<button class="buttonForm" ng-click="registerAero()" ng-disabled="validateForm.$invalid || validateForm.$pristine">Registrar</button><br>
+                        Vuelo:<input type="text" ng-model="vueloAero" required>
+                        Origen:<input type="text" ng-model="origenAero" required>
+                        Destino:<input type="text" ng-model="destinoAero" required>
+						Salida:<input type="date" ng-model="salidaAero" required>
+                        Llegada:<input type="date" ng-model="llegadaAero" required>
+                        Precio business:<input type="number" ng-model="precioBAero" required>
+						Plazas business:<input type="number" ng-model="plazasBAero" required>
+						Precio optima:<input type="number" ng-model="precioOAero" required>
+						Plazas optima:<input type="number" ng-model="plazasOAero" required>
+						Precio economy:<input type="number" ng-model="precioEAero" required>
+						Plazas economy:<input type="number" ng-model="plazasEAero" required>
+						<button class="buttonForm" ng-click="registerVuelo()" ng-disabled="validateForm.$invalid || validateForm.$pristine">Registrar Vuelo</button><br>
 					</form>
-                    
 				</div>
 				<div class="grid_6">
-					<h3>Inicio de sesión</h3>
+					<h3>Informacion</h3>
 					<form id="bookingForm" name="validateForm">
-                        Aerolinea:<input type="text" ng-model="nameAero" required>
-                        Contraseña:<input type="password" ng-model="passAero" required>
-						<button class="buttonForm" ng-click="sesionAero()" ng-disabled="validateForm.$invalid || validateForm.$pristine">Iniciar</button><br>
+                        Vuelo:<input type="text" ng-model="vueloAero" required>
+                        Origen:<input type="text" ng-model="origenAero" required>
+                        Destino:<input type="text" ng-model="destinoAero" required>
+						<button class="buttonForm" ng-click="info()" ng-disabled="validateForm.$invalid || validateForm.$pristine">INFO</button><br>
 					</form>
 				</div>
 			</div>
