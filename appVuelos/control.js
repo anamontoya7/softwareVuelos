@@ -2,6 +2,7 @@
 
 var sesion1 = angular.module("sesion1",[]); 
 sesion1.controller("ctrl1", function ($scope, $http) {
+   $scope.prueba = [];
    $scope.user = [];
    $scope.vuelo = [];
    $scope.origen = [];
@@ -65,6 +66,15 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$scope.selectedPasajeros = $scope.pasajeros;
 		$scope.mostrar = true;
 		$scope.noVuelos = false;
+		
+		$http({method: 'GET',url: "/vuelos?origen=Madrid&destino=Barcelona"}).then(function (archivo) {
+		   $scope.prueba = archivo.data;
+			console.log('pintando prueba');
+		   console.log($scope.prueba);
+		},function (error){
+		   $scope.user = [{name: "Error!! " + error.status}];
+		   console.log(error);
+		});
 		
 		for(var k = 0; k < $scope.user.vuelos.length; k++) {
 			$scope.vuelo = $scope.user.vuelos[k];

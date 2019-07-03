@@ -2,6 +2,13 @@
 
 var sesion1 = angular.module("sesion1",[]); 
 sesion1.controller("ctrl1", function ($scope, $http) {
+	
+   $http.get('/GetFulData?origen=Madrid&destino=Barcelona').then(function(response){
+	   console.log("sacando el resultado");
+	   console.log(response);
+	   $scope.name=response.data;
+   })
+	
    $scope.user = [];
    $scope.vuelo = [];
    $scope.origen = [];
