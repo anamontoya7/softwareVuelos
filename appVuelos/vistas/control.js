@@ -3,12 +3,6 @@
 var sesion1 = angular.module("sesion1",[]); 
 sesion1.controller("ctrl1", function ($scope, $http) {
 	
-   $http.get('/GetFulData?origen=Madrid&destino=Barcelona').then(function(response){
-	   console.log("sacando el resultado");
-	   console.log(response);
-	   $scope.name=response.data;
-   })
-	
    $scope.user = [];
    $scope.vuelo = [];
    $scope.origen = [];
@@ -26,7 +20,13 @@ sesion1.controller("ctrl1", function ($scope, $http) {
    var numVuelo = 0;
    var numVueloVuelta = 0;
    var numfly = 0;
-   
+   //variable aerolinea
+   $scope.id = [];
+   $scope.aerolinea = [];
+   $scope.pass = [];
+   $scope.aerolineaSesion = [];
+   $scope.passSesion = [];
+    
     
    $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
 	   $scope.user = archivo.data;
@@ -136,6 +136,31 @@ sesion1.controller("ctrl1", function ($scope, $http) {
             $scope.mostrar = false;
         }
     }
+	
+	$scope.registerAero = function() {
+		$scope.id = $scope.idAero;
+		$scope.aerolinea = $scope.nameAero;
+		$scope.pass = $scope.passAero;
+		console.log($scope.id);
+		console.log($scope.aerolinea);
+		console.log($scope.pass);
+		console.log("/aero/register?id="+ $scope.id +"&name="+ $scope.aerolinea + "&pass="+$scope.pass);
+		$http.get("/aero/register?id="+ $scope.id +"&name="+ $scope.aerolinea + "&pass="+$scope.pass).then(function(response){
+		console.log("sacando el resultado");
+		console.log(response);
+		$scope.name=response.data;
+		})
+	}
+	
+	$scope.sesionAero = function() {
+		$scope.aerolineaSesion = $scope.nameAeroS;
+		$scope.passSesion = $scope.passAeroS;
+		$http.get("/aero/sesion?name="+ $scope.aerolineaSesion + "&pass="+$scope.passSesion).then(function(response){
+		console.log("sacando el resultado");
+		console.log(response);
+		$scope.name=response.data;
+		})
+	}
 	
 	Array.prototype.unique=function(a){
 			return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
