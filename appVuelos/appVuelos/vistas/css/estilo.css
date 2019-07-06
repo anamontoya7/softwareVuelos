@@ -1,0 +1,39 @@
+table, table td {
+				padding: 8px;
+				border: none;
+				border-collapse: collapse;
+			}
+.buttonForm{
+				//padding: 15px 25px;
+				//font-size: 24px;
+				cursor: pointer;
+				text-align: center;
+				text-decoration: none;
+				outline: none;
+				background-color: #002141; 
+				color: white;
+				border: none;
+				border-radius: 15px;
+				box-shadow: 0 5px #999;
+			}
+.buttonForm:hover{
+				background-color: #F0F3F5; /* 8B8B8B */
+				color: #002141;
+			}
+.buttonForm:active {
+				background-color: #F0F3F5;
+				box-shadow: 0 5px #666;
+				transform: translateY(4px);
+			}
+button {
+				border-radius: 10px;
+				background-color: #E76565; /* Green */
+				color: white;
+			}
+button:hover {
+				background-color: #002141; /* Green */
+				color: white;
+			}
+#noFlies{
+				color:red;
+}
