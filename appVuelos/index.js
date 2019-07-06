@@ -119,7 +119,6 @@ server.get('/aero/compra',function(req, res){
 	
 });
 
-
 ////prueba
 server.get('/aero/register',function(req, res){
 	var id = req.query.id || '';
@@ -127,15 +126,16 @@ server.get('/aero/register',function(req, res){
 	var name = req.query.name || '';
 	console.log(name);
 	var pass = req.query.pass || '';
-	console.log(pass);
-    
-	var sql = "INSERT INTO aerolineas (id, name, passwd) VALUES ('"+ id +"', '"+name+"','"+pass+"')";
-		con.query(sql, function (err, result) {
-			if (err) throw err;
-			console.log("1 record inserted");
-		});
-	
-	res.sendFile(path.join(__dirname+'/vistas/html/aerolineas.html'));
+	console.log(pass);  
+        
+    var sql = "INSERT INTO aerolineas (id, name, passwd) SELECT '"+ id +"', '"+name+"','"+pass+"' FROM dual WHERE NOT EXISTS (SELECT * FROM aerolineas WHERE name ='"+name+"')";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+            
+     
+    res.sendFile(path.join(__dirname+'/vistas/html/aerolineas.html'));
 });
 
 server.get('/aero/sesion',function(req, res){
