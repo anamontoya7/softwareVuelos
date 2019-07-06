@@ -16,6 +16,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
    $scope.flies =[];
    $scope.mostrar = false;
    $scope.noVuelos = false;
+   $scope.carro = false;
    var numDestino = 0;
    var numVuelo = 0;
    var numVueloVuelta = 0;
@@ -26,6 +27,8 @@ sesion1.controller("ctrl1", function ($scope, $http) {
    $scope.pass = [];
    $scope.aerolineaSesion = [];
    $scope.passSesion = [];
+   $scope.carrito = [];
+   $scope.carritoTipo;
     
     
    $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
@@ -43,28 +46,17 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	});
 		
 	$scope.clickOrigen = function() {
-		$scope.destinos.length = 0;
-		$scope.destino.length = 0;
-		numDestino = 0;
-		$scope.flies.length = 0;
-		$scope.selectedOrigen = $scope.selectedName;
-        $scope.mostrar = false;
-		$scope.noVuelos = false;
-		for(var j = 0; j < $scope.user.vuelos.length; j++){
-			$scope.vuelo = $scope.user.vuelos[j];
-			if($scope.selectedOrigen == $scope.vuelo["origen"]){
-				$scope.destino[numDestino] = $scope.vuelo["destino"];
-				numDestino++;
-			}
-		}
-		$scope.destinos = $scope.destino.unique().sort();
+		$http.get("/aero/destinos?origen="+ $scope.selectedName).then(function(response) {
+			$scope.destinos = response.data;
+		})
 	}
+	
 	$scope.billetes = function() {
 		var numfly = 0;
 		var numVuelo = 0;
 		var numVueloVuelta = 0;
-		$scope.SelectedVueloIda.length = 0;
-		$scope.SelectedVueloVuelta.length = 0;
+		$scope.SelectedVueloIda = [];
+		$scope.SelectedVueloVuelta = [];
 		$scope.flies.length = 0;
 		$scope.selectedOrigen = $scope.selectedName;
 		$scope.selectedDestino = $scope.selectedName2;
@@ -74,59 +66,109 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$scope.mostrar = true;
 		$scope.noVuelos = false;
 		
-		for(var k = 0; k < $scope.user.vuelos.length; k++) {
-			$scope.vuelo = $scope.user.vuelos[k];
-
-			var date_salida = new Date($scope.vuelo["salida"]);
-
+		
+		$http.get("/aero/vuelos?origen="+ $scope.selectedOrigen + "&destino="+$scope.selectedDestino+"&fecha="+$scope.selectedIda+"&plazas="+$scope.pasajeros).then(function(response) {
+			var retorno = response.data;
+			for(var i = 0; i < retorno.length; i++) {
+				$scope.SelectedVueloIda.push({	"vuelo" : retorno[i].vuelo, 
+												"origen" : retorno[i].origen, 
+												"destino" : retorno[i].destino, 
+												"salida" : retorno[i].salida, 
+												"llegada" : retorno[i].llegada, 
+												"bussiness" : retorno[i].precio_business, 
+												"optima" : retorno[i].precio_optima, 
+												"economy" : retorno[i].precio_economy, 
+												"plazas_bussiness" : retorno[i].plazas_business, 
+												"plazas_optima" : retorno[i].plazas_optima, 
+												"plazas_economy" : retorno[i].plazas_economy
+											});
+			}
 			
 			
-			if($scope.selectedOrigen == $scope.vuelo["origen"] && $scope.selectedDestino == $scope.vuelo["destino"] 
-			&& $scope.selectedIda.getFullYear() == date_salida.getFullYear() && $scope.selectedIda.getMonth() == date_salida.getMonth() && $scope.selectedIda.getDate() == date_salida.getDate()
-			) {
-				$scope.horas_ida[numVuelo] = date_salida.getHours()-2 + ":" + date_salida.getMinutes();
-
-				$scope.SelectedVueloIda[numVuelo] = $scope.user.vuelos[k];
-				numVuelo++;
-		   
-			} 
-			
-			if($scope.selectedOrigen == $scope.vuelo["destino"] && $scope.selectedDestino == $scope.vuelo["origen"] 
-			&& $scope.selectedVuelta.getFullYear() == date_salida.getFullYear() && $scope.selectedVuelta.getMonth() == date_salida.getMonth() && $scope.selectedVuelta.getDate() == date_salida.getDate()
-			) {
-				$scope.horas_vuelta[numVueloVuelta] = date_salida.getHours()-2 + ":" + date_salida.getMinutes();
-
-				$scope.SelectedVueloVuelta[numVueloVuelta] = $scope.user.vuelos[k];
-
-				numVueloVuelta++;
-		   
-			} 
-			
-		}
+			$http.get("/aero/vuelos?destino="+ $scope.selectedOrigen + "&origen="+$scope.selectedDestino+"&fecha="+$scope.selectedVuelta+"&plazas="+$scope.pasajeros).then(function(response) {
+				var retorno2 = response.data;
+				for(var i = 0; i < retorno2.length; i++) {
+					$scope.SelectedVueloVuelta.push({	"vuelo" : retorno2[i].vuelo, 
+														"origen" : retorno2[i].origen, 
+														"destino" : retorno2[i].destino, 
+														"salida" : retorno2[i].salida, 
+														"llegada" : retorno2[i].llegada, 
+														"bussiness" : retorno2[i].precio_business, 
+														"optima" : retorno2[i].precio_optima, 
+														"economy" : retorno2[i].precio_economy, 
+														"plazas_bussiness" : retorno2[i].plazas_business, 
+														"plazas_optima" : retorno2[i].plazas_optima, 
+														"plazas_economy" : retorno2[i].plazas_economy
+													});
+				}
+				
+				
+				for(var l = 0;l<$scope.SelectedVueloIda.length;l++){
+				   for(var m = 0;m<$scope.SelectedVueloVuelta.length;m++){
+						var date_salidaO = new Date($scope.SelectedVueloIda[l].salida);
+						var stringSalidaO = date_salidaO.getHours()-2 + ":" + date_salidaO.getMinutes();
+						var date_salidaD = new Date($scope.SelectedVueloVuelta[m].salida);
+						var stringSalidaD = date_salidaD.getHours()-2 + ":" + date_salidaD.getMinutes();
+						
+						var costeB = 0;
+						if($scope.SelectedVueloIda[l].plazas_bussiness >= $scope.pasajeros && $scope.SelectedVueloVuelta[m].plazas_bussiness >= $scope.pasajeros)
+							costeB = ($scope.SelectedVueloIda[l].bussiness+$scope.SelectedVueloVuelta[m].bussiness)*$scope.pasajeros
+						
+						var costeO = 0;
+						if($scope.SelectedVueloIda[l].plazas_optima >= $scope.pasajeros && $scope.SelectedVueloVuelta[m].plazas_optima >= $scope.pasajeros)
+							costeO = ($scope.SelectedVueloIda[l].optima+$scope.SelectedVueloVuelta[m].optima)*$scope.pasajeros
+					
+						var costeE = 0;
+						if($scope.SelectedVueloIda[l].plazas_economy >= $scope.pasajeros && $scope.SelectedVueloVuelta[m].plazas_economy >= $scope.pasajeros)
+							costeE = ($scope.SelectedVueloIda[l].economy+$scope.SelectedVueloVuelta[m].economy)*$scope.pasajeros
+						
+						$scope.flies[numfly] = {	
+													"vueloIda"		:	$scope.SelectedVueloIda[l].vuelo + ' / ' + stringSalidaO,
+													"vueloVuelta"	:	$scope.SelectedVueloVuelta[m].vuelo + ' / ' + stringSalidaD,
+													"costeB"		:	costeB,
+													"costeO"		:	costeO,
+													"costeE"		:	costeE,
+													"ida"			:	$scope.SelectedVueloIda[l],
+													"vuelta"		:	$scope.SelectedVueloVuelta[m]
+												};
+						numfly++;
+					}     
+				}
+				
+				if($scope.flies.length == 0){
+					$scope.mostrar = false;
+					$scope.noVuelos = true;
+				}
+				
+			})
+		})
 		
 		
 
-		for(var l = 0;l<$scope.SelectedVueloIda.length;l++){
-		   for(var m = 0;m<$scope.SelectedVueloVuelta.length;m++){
-				$scope.flies[numfly] = {	
-											"vueloIda"		:	$scope.SelectedVueloIda[l].vuelo + ' / ' + $scope.horas_ida[l],
-											"vueloVuelta"	:	$scope.SelectedVueloVuelta[m].vuelo + ' / ' + $scope.horas_vuelta[m],
-											"costeB"		:	($scope.SelectedVueloIda[l].bussiness+$scope.SelectedVueloVuelta[m].bussiness)*$scope.pasajeros,
-											"costeO"		:	($scope.SelectedVueloIda[l].optima+$scope.SelectedVueloVuelta[m].optima)*$scope.pasajeros,
-											"costeE"		:	($scope.SelectedVueloIda[l].economy+$scope.SelectedVueloVuelta[m].economy)*$scope.pasajeros
-										};
-				numfly++;
-			}     
-		}
-		
-		if($scope.flies.length == 0){
-			$scope.mostrar = false;
-			$scope.noVuelos = true;
-		}
 		
 	}
-	$scope.comprar = function(valor) {
-		alert("El coste del vuelo sera " + valor);
+	$scope.reservar = function(data, tipo) {
+		$scope.carrito = data;
+		$scope.carritoTipo = tipo;
+		$scope.carro = true;
+	}
+	
+	$scope.comprar = function() {
+		console.log($scope.carrito);
+		console.log($scope.carritoTipo);
+		$http.get("/aero/compra?"+
+					"compradorN="+ $scope.nombreCompradorN + 
+					"&compradorA="+ $scope.nombreCompradorA + 
+					"&tipo="+$scope.carritoTipo + 
+					"&pasajeros="+$scope.pasajeros +
+					"&origenO="+$scope.carrito.ida.origen+
+					"&destinoO="+$scope.carrito.ida.destino+
+					"&salidaO="+$scope.carrito.ida.salida+
+					"&origenD="+$scope.carrito.vuelta.origen+
+					"&destinoD="+$scope.carrito.vuelta.destino+
+					"&salidaD="+$scope.carrito.vuelta.salida).then(function(response) {
+			alert("Comprado");
+		})
 	}
     
     $scope.cambioPasajeros = function(valor) {

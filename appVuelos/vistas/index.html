@@ -85,7 +85,7 @@
                         Origen:<br><select ng-model="selectedName" ng-options="x for x in origenes" required></select>
                         <button class="buttonForm" ng-click="clickOrigen()">Comprobar Destinos</button><br>
 						Destino:<br><select ng-model="selectedName2" ng-options="x for x in destinos" required></select><br>
-				        Pasajeros:<input type="number" ng-model="pasajeros" min="1" max="50" value="1" ng-change="cambioPasajeros()" required>
+				        Pasajeros:<input type="number" ng-model="pasajeros" min="1" value="1" ng-change="cambioPasajeros()" required>
 						<button class="buttonForm" ng-click="billetes()" ng-disabled="validateForm.$invalid || validateForm.$pristine">Buscar Vuelos</button><br>
 					</form>
                     
@@ -146,15 +146,20 @@
 						  <tr ng-repeat="h in flies">
 							 <td>{{h.vueloIda}}</td>
                              <td>{{h.vueloVuelta}}</td>
-                             <td>{{h.costeB}} € <button ng-click="comprar(h.costeB)">BUY</button> </td>
-                             <td>{{h.costeO}} € <button ng-click="comprar(h.costeO)">BUY</button> </td>
-                             <td>{{h.costeE}} € <button ng-click="comprar(h.costeE)">BUY</button> </td>
+                             <td >{{h.costeB}} € <button ng-click="reservar(h, 1)" ng-if="h.costeB != 0">BUY</button> </td>
+                             <td>{{h.costeO}} € <button ng-click="reservar(h, 2)" ng-if="h.costeO != 0">BUY</button> </td>
+                             <td>{{h.costeE}} € <button ng-click="reservar(h, 3)" ng-if="h.costeE != 0">BUY</button> </td>
 						  </tr>
 					   </tbody>
 					</table>
 			</div>
 			<div class="container_12" ng-show="noVuelos">
 					<h5 id= "noFlies">Lo sentimos, no hay vuelos disponibles de {{selectedOrigen}} a {{selectedDestino}} en esas fechas</h5>
+			</div>
+			
+			<div class="container_12" ng-show="carro" style="margin-top: 10px;">
+				Comprador: <input type="text" ng-model="nombreCompradorN" required> <input type="text" ng-model="nombreCompradorA" required><br>
+				<button class="buttonForm" ng-click="comprar()">Comprar</button>
 			</div>
 		</div>
 <!--==============================footer=================================-->
