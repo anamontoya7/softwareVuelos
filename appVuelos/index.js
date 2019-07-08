@@ -193,6 +193,25 @@ server.get('/aero/registerVuelo',function(req, res){
 	
 });
 
+server.get('/aero/infoVuelo',function(req, res){
+	var vuelo = req.query.vueloI || '';
+	console.log(vuelo);
+	var origen = req.query.origenI || '';
+	console.log(origen);
+	var destino = req.query.destinoI || '';
+	console.log(destino);
+	
+	var sql = "SELECT * FROM vuelos WHERE vuelo = '"+vuelo+"' and origen = '"+origen+"' and destino = '"+destino+"'";
+		con.query(sql, function (err, result) {
+			if (err) throw err;
+			res.setHeader('Content-Type', 'application/json');
+			res.end(JSON.stringify(result));
+		});
+	
+});
+
+
+
 //Server on
 server.listen(server.get('port'),function(){
     console.log('Server on Port:',server.get('port'))

@@ -103,6 +103,48 @@
 					</form>
 				</div>
 			</div>
+			
+			<div class="container_12">			
+				<div class="clear"></div>
+				<div class="grid_12">
+					<h3>Informacion</h3>
+					<table class="table" style="padding: 8px;">
+					   <thead>
+						  <tr>
+							 <td>Vuelo</td>
+							 <td>Origen</td>
+							 <td>Destino</td>
+							 <td>Salida</td>
+							 <td>Llegada</td>
+							 <td>Precio Business</td>
+							 <td>Plazas Business</td>
+							 <td>Precio Optima</td>
+							 <td>Plazas Optima</td>
+							 <td>Precio Economy</td>
+							 <td>Plazas Economy</td>
+						  </tr>
+					   </thead>
+					   <tbody>
+						  <tr ng-repeat="h in vuelosI">
+							 <td>{{h.vuelo}}</td>
+                             <td>{{h.origen}}</td>
+                             <td>{{h.destino}}</td>
+                             <td>{{h.llegada}}</td>
+                             <td>{{h.salida}}</td>
+                             <td>{{h.precio_business}}</td>
+							 <td>{{h.plazas_business}}</td>
+                             <td>{{h.precio_optima}}</td>
+							 <td>{{h.plazas_optima}}</td>
+							 <td>{{h.precio_economy}}</td>
+							 <td>{{h.plazas_economy}}</td>
+						  </tr>
+					   </tbody>
+					</table>
+				</div>
+			</div>
+			
+			
+			
 		</div>
 <!--==============================footer=================================-->
 		<footer>

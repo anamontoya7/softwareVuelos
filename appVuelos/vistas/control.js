@@ -41,6 +41,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	$scope.plazasOR = [];
 	$scope.precioER = [];
 	$scope.plazasER = [];
+	$scope.vuelosI = [];
     
    $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
 	   $scope.user = archivo.data;
@@ -249,7 +250,35 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	}
 	
 	$scope.info = function(){
-		console.log("aaaaaa");
+		$scope.vuelosI.length = 0;
+		console.log("info");
+		$scope.vueloI = $scope.vueloInfo;
+		console.log($scope.vueloI);
+		$scope.origenI = $scope.origenInfo;
+		console.log($scope.origenI);
+		$scope.destinoI = $scope.destinoInfo;
+		console.log($scope.destinoI);
+		$http.get("/aero/infoVuelo?vueloI="+ $scope.vueloI + "&origenI="+$scope.origenI +"&destinoI="+$scope.destinoI).then(function(response) {
+			$scope.vuelosI = response.data;
+			/*var infoVuelos = response.data;
+			for(var i = 0; i < infoVuelos.length; i++) {	
+					$scope.vuelosI[i] = {	
+														"vuelo" : infoVuelos[i].vuelo, 
+														"origen" : infoVuelos[i].origen, 
+														"destino" : infoVuelos[i].destino, 
+														"salida" : infoVuelos[i].salida, 
+														"llegada" : infoVuelos[i].llegada, 
+														"bussiness" : infoVuelos[i].precio_business, 
+														"optima" : infoVuelos[i].precio_optima, 
+														"economy" : infoVuelos[i].precio_economy, 
+														"plazas_bussiness" : infoVuelos[i].plazas_business, 
+														"plazas_optima" : infoVuelos[i].plazas_optima, 
+														"plazas_economy" : infoVuelos[i].plazas_economy
+												};
+			};*/
+			console.log(infoVuelos);
+			console.log($scope.vuelosI);
+		})
 	}
 	
 	Array.prototype.unique=function(a){
