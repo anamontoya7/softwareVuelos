@@ -29,7 +29,18 @@ sesion1.controller("ctrl1", function ($scope, $http) {
    $scope.passSesion = [];
    $scope.carrito = [];
    $scope.carritoTipo;
-    
+   //variables registrar vuelo
+	$scope.vueloR = [];
+	$scope.origenR = [];
+	$scope.destinoR = [];
+	$scope.salidaR = [];
+	$scope.llegadaR = [];
+	$scope.precioBR = [];
+	$scope.plazasBR = [];
+	$scope.precioOR = [];
+	$scope.plazasOR = [];
+	$scope.precioER = [];
+	$scope.plazasER = [];
     
    $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
 	   $scope.user = archivo.data;
@@ -198,10 +209,47 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$scope.aerolineaSesion = $scope.nameAeroS;
 		$scope.passSesion = $scope.passAeroS;
 		$http.get("/aero/sesion?name="+ $scope.aerolineaSesion + "&pass="+$scope.passSesion).then(function(response){
-		console.log("sacando el resultado");
-		console.log(response);
-		$scope.name=response.data;
+			window.location=response.data+"?aero="+$scope.aerolineaSesion;
 		})
+	}
+	
+	$scope.registerVuelo = function() {
+		console.log("aaaaaaaaaaaaa");
+		$scope.vueloR = $scope.vueloAero;
+		console.log($scope.vueloR);
+		$scope.origenR = $scope.origenAero;
+		console.log($scope.origenR);
+		$scope.destinoR = $scope.destinoAero;
+		console.log($scope.destinoR);
+		$scope.salidaR = $scope.salidaAero;
+		console.log($scope.salidaR);
+		var salida = $scope.salidaR.toISOString();
+		console.log(salida);
+		$scope.llegadaR = $scope.llegadaAero;
+		console.log($scope.llegadaR);
+		var llegada = $scope.llegadaR.toISOString();
+		console.log(llegada);
+		$scope.precioBR = $scope.precioBAero;
+		console.log($scope.precioBR);
+		$scope.plazasBR = $scope.plazasBAero;
+		console.log($scope.plazasBR);
+		$scope.precioOR = $scope.precioOAero;
+		console.log($scope.precioOR);
+		$scope.plazasOR = $scope.plazasOAero;
+		console.log($scope.plazasOR);
+		$scope.precioER = $scope.precioEAero;
+		console.log($scope.precioER);
+		$scope.plazasER = $scope.plazasEAero;
+		console.log($scope.plazasER);
+		$http.get("/aero/registerVuelo?vueloR="+ $scope.vueloR + "&origenR="+$scope.origenR +"&destinoR="+$scope.destinoR+"&salidaR="+salida+"&llegadaR="
+			+llegada+"&precioBR="+$scope.precioBR+"&plazasBR="+$scope.plazasBR+"&precioOR="+$scope.precioOR+"&plazasOR="+$scope.plazasOR
+			+"&precioER="+$scope.precioER+"&plazasER="+$scope.plazasER).then(function(response) {
+			alert("El vuelo ha sido registrado");
+		})
+	}
+	
+	$scope.info = function(){
+		console.log("aaaaaa");
 	}
 	
 	Array.prototype.unique=function(a){

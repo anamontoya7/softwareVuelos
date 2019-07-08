@@ -78,28 +78,28 @@
 				<div class="clear"></div>
 				<div class="grid_6">
 					<h3>Vuelos</h3>
-					<form id="bookingForm" name="validateForm">
+					<form id="bookingForm" name="registerVueloForm">
                         Vuelo:<input type="text" ng-model="vueloAero" required>
                         Origen:<input type="text" ng-model="origenAero" required>
                         Destino:<input type="text" ng-model="destinoAero" required>
-						Salida:<input type="date" ng-model="salidaAero" required>
-                        Llegada:<input type="date" ng-model="llegadaAero" required>
+						Salida:<input type="datetime-local" ng-model="salidaAero" required>
+                        Llegada:<input type="datetime-local" ng-model="llegadaAero" required>
                         Precio business:<input type="number" ng-model="precioBAero" required>
 						Plazas business:<input type="number" ng-model="plazasBAero" required>
 						Precio optima:<input type="number" ng-model="precioOAero" required>
 						Plazas optima:<input type="number" ng-model="plazasOAero" required>
 						Precio economy:<input type="number" ng-model="precioEAero" required>
 						Plazas economy:<input type="number" ng-model="plazasEAero" required>
-						<button class="buttonForm" ng-click="registerVuelo()" ng-disabled="validateForm.$invalid || validateForm.$pristine">Registrar Vuelo</button><br>
+						<button class="buttonForm" ng-click="registerVuelo()" ng-disabled="registerVueloForm.$invalid || registerVueloForm.$pristine">Registrar Vuelo</button><br>
 					</form>
 				</div>
 				<div class="grid_6">
 					<h3>Informacion</h3>
-					<form id="bookingForm" name="validateForm">
-                        Vuelo:<input type="text" ng-model="vueloAero" required>
-                        Origen:<input type="text" ng-model="origenAero" required>
-                        Destino:<input type="text" ng-model="destinoAero" required>
-						<button class="buttonForm" ng-click="info()" ng-disabled="validateForm.$invalid || validateForm.$pristine">INFO</button><br>
+					<form id="bookingForm" name="infoForm">
+                        Vuelo:<input type="text" ng-model="vueloInfo" required>
+                        Origen:<input type="text" ng-model="origenInfo" required>
+                        Destino:<input type="text" ng-model="destinoInfo" required>
+						<button class="buttonForm" ng-click="info()" ng-disabled="infoForm.$invalid || infoForm.$pristine">INFO</button><br>
 					</form>
 				</div>
 			</div>

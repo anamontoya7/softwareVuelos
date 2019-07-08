@@ -142,17 +142,53 @@ server.get('/aero/sesion',function(req, res){
 	var nameSesion = req.query.name || '';
 	console.log(nameSesion);
 	var passSesion = req.query.pass || '';
-	console.log(nameSesion);
+	console.log(passSesion);
     
 	var sql = "SELECT * FROM aerolineas WHERE name = '"+nameSesion+"' and passwd = '"+passSesion+"'";
 		con.query(sql, function (err, result) {
 			if (err) throw err;
 			if (result.length == 0){
-				res.sendFile(path.join(__dirname+'/vistas/html/aerolineas.html'));
+				console.log('no se ha iniciado sesion correctamente');
+				res.send('/html/aerolineas.html');
 
 			} else{
-				console.log(path.join(__dirname+'/vistas/html/functionsAero.html'));
-				res.sendFile(path.join(__dirname+'/vistas/html/functionsAero.html'));}
+				console.log('se ha iniciado sesion correctamente');
+				res.send('/html/functionsAero.html');
+				}
+		});
+	
+});
+
+server.get('/aero/registerVuelo',function(req, res){
+	var vuelo = req.query.vueloR || '';
+	console.log(vuelo);
+	var origen = req.query.origenR || '';
+	console.log(origen);
+	var destino = req.query.destinoR || '';
+	console.log(destino);
+	var salida = req.query.salidaR || '';
+	console.log(salida);
+	var llegada = req.query.llegadaR || '';
+	console.log(llegada);
+	var precioB = req.query.precioBR || '';
+	console.log(precioB);
+	var plazasB = req.query.plazasBR || '';
+	console.log(plazasB);
+    var precioO = req.query.precioOR || '';
+	console.log(precioO);
+	var plazasO = req.query.plazasOR || '';
+	console.log(plazasO);
+	var precioE = req.query.precioER || '';
+	console.log(precioE);
+	var plazasE = req.query.plazasER || '';
+	console.log(plazasE);
+	
+	var sql = "INSERT INTO vuelos (vuelo, origen, destino, salida, llegada, precio_business, precio_optima, precio_economy, plazas_business, "
+	+"plazas_optima, plazas_economy) VALUES ('"+vuelo+"','"+origen+"','"+destino+"','"+salida+"','"+llegada+"','"+precioB+"','"+precioO+"','"+precioE+"','"
+	+plazasB+"','"+plazasO+"','"+plazasE+"')";
+		con.query(sql, function (err, result) {
+			if (err) throw err;
+			console.log("1 VUELO inserted");
 		});
 	
 });
