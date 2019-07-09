@@ -167,6 +167,7 @@
 					<h5>Su vuelo ha sido comprado con éxito.</h5>
                     <p> Su vuelo es: {{selectedOrigen}}-{{selectedDestino}}.</p>
                     <p> En las fechas: {{selectedIda.getDate()}}/{{selectedIda.getMonth()+1}}/{{selectedIda.getFullYear()}} hasta {{selectedVuelta.getDate()}}/{{selectedVuelta.getMonth()+1}}/{{selectedVuelta.getFullYear()}}.</p>
+                    <p>Su codigo de reserva se corresponde con el número: {{identificador}}</p>
                     <p>Gracias por confiar en nosotros.</p>
                     <button class="buttonForm" ng-click="comprado()">Aceptar</button>
 			</div>

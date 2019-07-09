@@ -44,7 +44,8 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	$scope.precioER = [];
 	$scope.plazasER = [];
 	$scope.vuelosI = [];
-    $scope.valor = 0;
+    $scope.identificador;
+    $scope.valor;
     
    $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
 	   $scope.user = archivo.data;
@@ -170,10 +171,10 @@ sesion1.controller("ctrl1", function ($scope, $http) {
         $scope.mostrar = false;
 	}
     
-    $scope.deshacer = function(data, tipo) {
+    $scope.deshacer = function() {
         $scope.mostrarsolucion = true;
     }
-    $scope.cancelaciongo = function(data, tipo) {
+    $scope.cancelaciongo = function() {
         $scope.mostrarsolucion = false;
     }
 	$scope.comprar = function() {
@@ -190,6 +191,10 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 					"&origenD="+$scope.carrito.vuelta.origen+
 					"&destinoD="+$scope.carrito.vuelta.destino+
 					"&salidaD="+$scope.carrito.vuelta.salida).then(function(response) {
+            $scope.valor = response.data;
+            console.log($scope.valor);
+            $scope.identificador= $scope.valor;
+            //console.log($scope.identificador);
             $scope.mostrar = false;
             $scope.carro = false;
             $scope.mostrarVenta = true; 
