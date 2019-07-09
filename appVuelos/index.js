@@ -101,11 +101,37 @@ server.get('/aero/compra',function(req, res){
 	var origenD = req.query.origenD || '';
 	var destinoD = req.query.destinoD || '';
 	var salidaD = req.query.salidaD || '';
-		
-	var sql = "INSERT INTO pasajeros (cod_reserva, numero, nombre, apellidos) VALUES ('0', '0', '"+compradorN+"','"+compradorA+"')";
+	
+    
+    sql = "SELECT cod_reserva FROM pasajeros ORDER BY cod_reserva DESC";
 	con.query(sql, function (err, result) {
 		if (err) throw err;
+        //console.log(result);
+        
+        var ids = [];
+        
+		for (var i = 0; i < result.length; i++) {
+			ids.push(result[i].cod_reserva);
+		}
+        var valor = ids[0]+1;
+         
+        console.log(valor);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(valor));
+        
+        var sqlq = "INSERT INTO pasajeros (cod_reserva, numero, nombre, apellidos) VALUES ('"+valor+"', '0', '"+compradorN+"','"+compradorA+"')";
+        con.query(sqlq, function (err, result) {
+		if (err) throw err;
+	   });
+        
 	});
+    
+	/*var sqlq = "INSERT INTO pasajeros (cod_reserva, numero, nombre, apellidos) VALUES ('1', '0', '"+compradorN+"','"+compradorA+"')";
+	con.query(sqlq, function (err, result) {
+		if (err) throw err;
+	});*/
+    
+    
 	sql = "UPDATE vuelos SET "+tipoString+" = "+tipoString+"-"+pasajeros+" WHERE origen = '"+origenO+"' AND destino = '"+destinoO+"' AND salida = '"+salidaO+"'";
 	con.query(sql, function (err, result) {
 		if (err) throw err;
@@ -114,10 +140,13 @@ server.get('/aero/compra',function(req, res){
 	con.query(sql, function (err, result) {
 		if (err) throw err;
 	});
-	
-	res.end();
+    
+    
+	//res.end();
 	
 });
+
+
 
 ////prueba
 server.get('/aero/register',function(req, res){
@@ -211,9 +240,7 @@ server.get('/aero/infoVuelo',function(req, res){
 });
 
 
-
 //Server on
 server.listen(server.get('port'),function(){
-    console.log('Server on Port:',server.get('port'))
+    console.log('Server on Port:',server.get('port')) 
 });
- 
