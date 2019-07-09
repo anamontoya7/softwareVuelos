@@ -17,6 +17,8 @@ sesion1.controller("ctrl1", function ($scope, $http) {
    $scope.mostrar = false;
    $scope.noVuelos = false;
    $scope.carro = false;
+   $scope.mostrarVenta = false;
+   $scope.mostrarsolucion = false;
    var numDestino = 0;
    var numVuelo = 0;
    var numVueloVuelta = 0;
@@ -44,7 +46,8 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	$scope.vuelosI = [];
 	$scope.mostrarINFO = false;
 	$scope.noINFO = false;
-	
+    $scope.identificador;
+    $scope.valor;
     
    $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
 	   $scope.user = archivo.data;
@@ -80,6 +83,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$scope.selectedPasajeros = $scope.pasajeros;
 		$scope.mostrar = true;
 		$scope.noVuelos = false;
+        $scope.mostrarVenta = false;
 		
 		
 		$http.get("/aero/vuelos?origen="+ $scope.selectedOrigen + "&destino="+$scope.selectedDestino+"&fecha="+$scope.selectedIda+"&plazas="+$scope.pasajeros).then(function(response) {
@@ -166,13 +170,26 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$scope.carrito = data;
 		$scope.carritoTipo = tipo;
 		$scope.carro = true;
+        $scope.mostrar = false;
 	}
-	
+    
+    $scope.deshacer = function() {
+        $scope.mostrarsolucion = true;
+        $scope.identificadorDelete = $scope.idvuelocancelacion;
+        console.log($scope.identificadorDelete);
+        $http.get("/aero/delete?"+
+                  "iddelete=" +$scope.identificadorDelete).then(function(response) {   
+        })
+    }
+    $scope.cancelaciongo = function() {
+        $scope.mostrarsolucion = false;
+    }
 	$scope.comprar = function() {
 		console.log($scope.carrito);
 		console.log($scope.carritoTipo);
 		$http.get("/aero/compra?"+
-					"compradorN="+ $scope.nombreCompradorN + 
+                    "fechaV="+ $scope.selectedIda +
+					"&compradorN="+ $scope.nombreCompradorN + 
 					"&compradorA="+ $scope.nombreCompradorA + 
 					"&tipo="+$scope.carritoTipo + 
 					"&pasajeros="+$scope.pasajeros +
@@ -182,9 +199,18 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 					"&origenD="+$scope.carrito.vuelta.origen+
 					"&destinoD="+$scope.carrito.vuelta.destino+
 					"&salidaD="+$scope.carrito.vuelta.salida).then(function(response) {
-			alert("Comprado");
+            $scope.valor = response.data;
+            console.log($scope.valor);
+            $scope.identificador= $scope.valor;
+            //console.log($scope.identificador);
+            $scope.mostrar = false;
+            $scope.carro = false;
+            $scope.mostrarVenta = true; 
 		})
 	}
+    $scope.comprado = function() {
+        $scope.mostrarVenta = false;
+    } 
     
     $scope.cambioPasajeros = function(valor) {
         $scope.selectedPasajerosComprobacion = $scope.pasajeros;

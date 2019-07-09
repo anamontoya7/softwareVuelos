@@ -131,7 +131,7 @@
 					
 					<br>
 					<br>
-					
+					<P>Seleccione el vuelo deseado pulsado en el botón correspondiente a dicho vuelo.</P>
 					<table class="table" style="padding: 8px;">
 					   <thead>
 						  <tr>
@@ -158,10 +158,21 @@
 			</div>
 			
 			<div class="container_12" ng-show="carro" style="margin-top: 10px;">
-				Comprador: <input type="text" ng-model="nombreCompradorN" required> <input type="text" ng-model="nombreCompradorA" required><br>
+                <p>Introduzca su Nombre y Apellido para efectuar su compra.</p>
+				Nombre: <input type="text" ng-model="nombreCompradorN" required> Apellido:<input type="text" ng-model="nombreCompradorA" required><br>
 				<button class="buttonForm" ng-click="comprar()">Comprar</button>
 			</div>
+            
+            <div class="container_12" ng-show="mostrarVenta">
+					<h5>Su vuelo ha sido comprado con éxito.</h5>
+                    <p> Su vuelo es: {{selectedOrigen}}-{{selectedDestino}}.</p>
+                    <p> En las fechas: {{selectedIda.getDate()}}/{{selectedIda.getMonth()+1}}/{{selectedIda.getFullYear()}} hasta {{selectedVuelta.getDate()}}/{{selectedVuelta.getMonth()+1}}/{{selectedVuelta.getFullYear()}}.</p>
+                    <p>Su codigo de reserva se corresponde con el número: {{identificador}}</p>
+                    <p>Gracias por confiar en nosotros.</p>
+                    <button class="buttonForm" ng-click="comprado()">Aceptar</button>
+			</div>
 		</div>
+    
 <!--==============================footer=================================-->
 		<footer>
 			<div class="container_12">
