@@ -18,6 +18,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
    $scope.noVuelos = false;
    $scope.carro = false;
    $scope.mostrarVenta = false;
+   $scope.mostrarsolucion = false;
    var numDestino = 0;
    var numVuelo = 0;
    var numVueloVuelta = 0;
@@ -43,6 +44,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	$scope.precioER = [];
 	$scope.plazasER = [];
 	$scope.vuelosI = [];
+    $scope.valor = 0;
     
    $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
 	   $scope.user = archivo.data;
@@ -167,7 +169,13 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$scope.carro = true;
         $scope.mostrar = false;
 	}
-	
+    
+    $scope.deshacer = function(data, tipo) {
+        $scope.mostrarsolucion = true;
+    }
+    $scope.cancelaciongo = function(data, tipo) {
+        $scope.mostrarsolucion = false;
+    }
 	$scope.comprar = function() {
 		console.log($scope.carrito);
 		console.log($scope.carritoTipo);
@@ -184,7 +192,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 					"&salidaD="+$scope.carrito.vuelta.salida).then(function(response) {
             $scope.mostrar = false;
             $scope.carro = false;
-            $scope.mostrarVenta = true;
+            $scope.mostrarVenta = true; 
 		})
 	}
     $scope.comprado = function() {
