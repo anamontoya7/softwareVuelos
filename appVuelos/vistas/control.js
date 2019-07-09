@@ -17,6 +17,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
    $scope.mostrar = false;
    $scope.noVuelos = false;
    $scope.carro = false;
+   $scope.mostrarVenta = false;
    var numDestino = 0;
    var numVuelo = 0;
    var numVueloVuelta = 0;
@@ -77,6 +78,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$scope.selectedPasajeros = $scope.pasajeros;
 		$scope.mostrar = true;
 		$scope.noVuelos = false;
+        $scope.mostrarVenta = false;
 		
 		
 		$http.get("/aero/vuelos?origen="+ $scope.selectedOrigen + "&destino="+$scope.selectedDestino+"&fecha="+$scope.selectedIda+"&plazas="+$scope.pasajeros).then(function(response) {
@@ -179,9 +181,14 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 					"&origenD="+$scope.carrito.vuelta.origen+
 					"&destinoD="+$scope.carrito.vuelta.destino+
 					"&salidaD="+$scope.carrito.vuelta.salida).then(function(response) {
-			alert("Comprado");
+            $scope.mostrar = false;
+            $scope.carro = false;
+            $scope.mostrarVenta = true;
 		})
 	}
+    $scope.comprado = function() {
+        $scope.mostrarVenta = false;
+    } 
     
     $scope.cambioPasajeros = function(valor) {
         $scope.selectedPasajerosComprobacion = $scope.pasajeros;
