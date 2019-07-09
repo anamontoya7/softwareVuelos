@@ -28,6 +28,7 @@
         <script src="../control.js"></script><!--Controlador Json-->
         <!--Cabezera de la pagina-->
 		<script src="../js/header.js"></script>
+		<script src="./readCookie.js"></script>
 	</head>
 	<body class="page1" id="top" >
 <!--==============================header=================================-->
@@ -37,8 +38,9 @@
 					<div class="menu_block">
 						<nav class="horizontal-nav full-width horizontalNav-notprocessed">
 							<ul class="sf-menu">
-								<li class="current"><a href="../index.html">Vuelos ATM</a></li>
-								<li class="current"><a href="">CERRAR SESION</a></li>
+								<li class="current"><a id="insert" href="functionsAero.html">Vuelos ATM</a></li>
+								<li class="current"><a href="addVuelosAero.html">Añadir Vuelos</a></li>
+								<li class="current"><a href="cerrar.html">CERRAR SESION</a></li>
 							</ul>
 						</nav>
 						<div class="clear"></div>
@@ -74,40 +76,23 @@
 		</div>
 <!--==============================Content=================================-->
 		<div class="content" ng-app="sesion1" ng-controller="ctrl1"><div class="ic"></div>
-			<div class="container_12">			
+			<div class="container_12">
 				<div class="clear"></div>
-				<div class="grid_6">
-					<h3>Vuelos</h3>
-					<form id="bookingForm" name="registerVueloForm">
-                        Vuelo:<input type="text" ng-model="vueloAero" required>
-                        Origen:<input type="text" ng-model="origenAero" required>
-                        Destino:<input type="text" ng-model="destinoAero" required>
-						Salida:<input type="datetime-local" ng-model="salidaAero" required>
-                        Llegada:<input type="datetime-local" ng-model="llegadaAero" required>
-                        Precio business:<input type="number" ng-model="precioBAero" required>
-						Plazas business:<input type="number" ng-model="plazasBAero" required>
-						Precio optima:<input type="number" ng-model="precioOAero" required>
-						Plazas optima:<input type="number" ng-model="plazasOAero" required>
-						Precio economy:<input type="number" ng-model="precioEAero" required>
-						Plazas economy:<input type="number" ng-model="plazasEAero" required>
-						<button class="buttonForm" ng-click="registerVuelo()" ng-disabled="registerVueloForm.$invalid || registerVueloForm.$pristine">Registrar Vuelo</button><br>
-					</form>
-				</div>
 				<div class="grid_6">
 					<h3>Informacion</h3>
 					<form id="bookingForm" name="infoForm">
                         Vuelo:<input type="text" ng-model="vueloInfo" required>
-                        Origen:<input type="text" ng-model="origenInfo" required>
-                        Destino:<input type="text" ng-model="destinoInfo" required>
+                        Origen:<input type="text" ng-model="origenInfo" >
+                        Destino:<input type="text" ng-model="destinoInfo" >
 						<button class="buttonForm" ng-click="info()" ng-disabled="infoForm.$invalid || infoForm.$pristine">INFO</button><br>
 					</form>
 				</div>
 			</div>
 			
-			<div class="container_12">			
+			<div class="container_12" ng-show="mostrarINFO">			
 				<div class="clear"></div>
 				<div class="grid_12">
-					<h3>Informacion</h3>
+					<h3>Vuelos</h3>
 					<table class="table" style="padding: 8px;">
 					   <thead>
 						  <tr>
@@ -142,8 +127,19 @@
 					</table>
 				</div>
 			</div>
+			<div class="container_12" ng-show="noINFO">			
+				<div class="clear"></div>
+				<div class="grid_12">
+					<h3 id="noVuelos"></h3>
+				</div>
+			</div>
 			
-			
+			<script>
+					var miCookie = readCookie( "id" );
+					console.log( miCookie );
+					document.getElementById("insert").innerHTML = "Aerolinea " + miCookie;
+					document.getElementById("noVuelos").innerHTML = "La aerolinea " + miCookie + " no dispone de ese vuelo";
+			</script>
 			
 		</div>
 <!--==============================footer=================================-->

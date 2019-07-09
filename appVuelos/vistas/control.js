@@ -42,6 +42,9 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	$scope.precioER = [];
 	$scope.plazasER = [];
 	$scope.vuelosI = [];
+	$scope.mostrarINFO = false;
+	$scope.noINFO = false;
+	
     
    $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
 	   $scope.user = archivo.data;
@@ -200,9 +203,10 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		console.log($scope.pass);
 		console.log("/aero/register?id="+ $scope.id +"&name="+ $scope.aerolinea + "&pass="+$scope.pass);
 		$http.get("/aero/register?id="+ $scope.id +"&name="+ $scope.aerolinea + "&pass="+$scope.pass).then(function(response){
-		console.log("sacando el resultado");
-		console.log(response);
-		$scope.name=response.data;
+			alert(response.data);
+			console.log("sacando el resultado");
+			console.log(response);
+			$scope.name=response.data;
 		})
 	}
 	
@@ -210,12 +214,15 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$scope.aerolineaSesion = $scope.nameAeroS;
 		$scope.passSesion = $scope.passAeroS;
 		$http.get("/aero/sesion?name="+ $scope.aerolineaSesion + "&pass="+$scope.passSesion).then(function(response){
-			window.location=response.data+"?aero="+$scope.aerolineaSesion;
+			document.cookie = "id="+$scope.aerolineaSesion;	
+			window.location=response.data;
 		})
 	}
 	
 	$scope.registerVuelo = function() {
 		console.log("aaaaaaaaaaaaa");
+		var cookie = readCookie("id");
+		console.log(cookie);
 		$scope.vueloR = $scope.vueloAero;
 		console.log($scope.vueloR);
 		$scope.origenR = $scope.origenAero;
@@ -242,7 +249,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		console.log($scope.precioER);
 		$scope.plazasER = $scope.plazasEAero;
 		console.log($scope.plazasER);
-		$http.get("/aero/registerVuelo?vueloR="+ $scope.vueloR + "&origenR="+$scope.origenR +"&destinoR="+$scope.destinoR+"&salidaR="+salida+"&llegadaR="
+		$http.get("/aero/registerVuelo?nameAero="+cookie+"&vueloR="+ $scope.vueloR + "&origenR="+$scope.origenR +"&destinoR="+$scope.destinoR+"&salidaR="+salida+"&llegadaR="
 			+llegada+"&precioBR="+$scope.precioBR+"&plazasBR="+$scope.plazasBR+"&precioOR="+$scope.precioOR+"&plazasOR="+$scope.plazasOR
 			+"&precioER="+$scope.precioER+"&plazasER="+$scope.plazasER).then(function(response) {
 			alert("El vuelo ha sido registrado");
@@ -252,31 +259,23 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	$scope.info = function(){
 		$scope.vuelosI.length = 0;
 		console.log("info");
+		var cookie = readCookie("id");
+		console.log(cookie);
 		$scope.vueloI = $scope.vueloInfo;
 		console.log($scope.vueloI);
 		$scope.origenI = $scope.origenInfo;
 		console.log($scope.origenI);
 		$scope.destinoI = $scope.destinoInfo;
 		console.log($scope.destinoI);
-		$http.get("/aero/infoVuelo?vueloI="+ $scope.vueloI + "&origenI="+$scope.origenI +"&destinoI="+$scope.destinoI).then(function(response) {
+		$http.get("/aero/infoVuelo?nameAero="+cookie+"&vueloI="+ $scope.vueloI + "&origenI="+$scope.origenI +"&destinoI="+$scope.destinoI).then(function(response) {
 			$scope.vuelosI = response.data;
-			/*var infoVuelos = response.data;
-			for(var i = 0; i < infoVuelos.length; i++) {	
-					$scope.vuelosI[i] = {	
-														"vuelo" : infoVuelos[i].vuelo, 
-														"origen" : infoVuelos[i].origen, 
-														"destino" : infoVuelos[i].destino, 
-														"salida" : infoVuelos[i].salida, 
-														"llegada" : infoVuelos[i].llegada, 
-														"bussiness" : infoVuelos[i].precio_business, 
-														"optima" : infoVuelos[i].precio_optima, 
-														"economy" : infoVuelos[i].precio_economy, 
-														"plazas_bussiness" : infoVuelos[i].plazas_business, 
-														"plazas_optima" : infoVuelos[i].plazas_optima, 
-														"plazas_economy" : infoVuelos[i].plazas_economy
-												};
-			};*/
-			console.log(infoVuelos);
+			if($scope.vuelosI.length==0){
+				$scope.mostrarINFO = false;
+				$scope.noINFO = true;
+			}else{
+				$scope.mostrarINFO = true;
+				$scope.noINFO = false;
+			}
 			console.log($scope.vuelosI);
 		})
 	}
@@ -284,7 +283,24 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	Array.prototype.unique=function(a){
 			return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
 	});
-    
+	
+    function readCookie(name) {
+				  var nameEQ = name + "="; 
+				  var ca = document.cookie.split(';');
+
+				  for(var i=0;i < ca.length;i++) {
+
+					var c = ca[i];
+					while (c.charAt(0)==' ') c = c.substring(1,c.length);
+					if (c.indexOf(nameEQ) == 0) {
+					  return decodeURIComponent( c.substring(nameEQ.length,c.length) );
+					}
+
+				  }
+
+				  return null;
+
+				};
 }); 
     
 

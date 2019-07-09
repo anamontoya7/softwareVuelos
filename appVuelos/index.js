@@ -127,15 +127,32 @@ server.get('/aero/register',function(req, res){
 	console.log(name);
 	var pass = req.query.pass || '';
 	console.log(pass);  
-        
-    var sql = "INSERT INTO aerolineas (id, name, passwd) SELECT '"+ id +"', '"+name+"','"+pass+"' FROM dual WHERE NOT EXISTS (SELECT * FROM aerolineas WHERE name ='"+name+"')";
+    var result1 = [];
+	var result2 = [];
+	var sql = "SELECT COUNT(*) FROM aerolineas";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+			result1=JSON.stringify(result);
+			console.log("ressss");
+			console.log(result1);
+        });
+    
+    var sql = "INSERT INTO aerolineas (id, name, passwd) SELECT '"+ id +"', '"+name+"','"+pass+"' FROM dual WHERE NOT EXISTS (SELECT * FROM aerolineas WHERE name ='"+name+"' or id='"+id+"')";
         con.query(sql, function (err, result) {
             if (err) throw err;
             console.log("1 record inserted");
         });
             
-     
-    res.sendFile(path.join(__dirname+'/vistas/html/aerolineas.html'));
+     var sql = "SELECT COUNT(*) FROM aerolineas";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+			result2=JSON.stringify(result);
+			if(result1==result2){
+				res.send("Cambie, el ID por otro")
+			}else{
+				res.send("Registrado, correctamente");
+			}
+        });
 });
 
 server.get('/aero/sesion',function(req, res){
@@ -160,6 +177,8 @@ server.get('/aero/sesion',function(req, res){
 });
 
 server.get('/aero/registerVuelo',function(req, res){
+	var nameAero = req.query.nameAero || '';
+	console.log(nameAero);
 	var vuelo = req.query.vueloR || '';
 	console.log(vuelo);
 	var origen = req.query.origenR || '';
@@ -182,31 +201,51 @@ server.get('/aero/registerVuelo',function(req, res){
 	console.log(precioE);
 	var plazasE = req.query.plazasER || '';
 	console.log(plazasE);
+	var id;
 	
-	var sql = "INSERT INTO vuelos (vuelo, origen, destino, salida, llegada, precio_business, precio_optima, precio_economy, plazas_business, "
-	+"plazas_optima, plazas_economy) VALUES ('"+vuelo+"','"+origen+"','"+destino+"','"+salida+"','"+llegada+"','"+precioB+"','"+precioO+"','"+precioE+"','"
-	+plazasB+"','"+plazasO+"','"+plazasE+"')";
+	var sql = "SELECT id FROM aerolineas WHERE name = '"+nameAero+"'";
 		con.query(sql, function (err, result) {
 			if (err) throw err;
-			console.log("1 VUELO inserted");
+			id = result[0].id;
+			var sql = "INSERT INTO vuelos (vuelo, origen, destino, salida, llegada, precio_business, precio_optima, precio_economy, plazas_business, "
+				+"plazas_optima, plazas_economy) VALUES ('"+id+"-"+vuelo+"','"+origen+"','"+destino+"','"+salida+"','"+llegada+"','"+precioB+"','"+precioO+"','"+precioE+"','"
+				+plazasB+"','"+plazasO+"','"+plazasE+"')";
+				
+				con.query(sql, function (err, result) {
+						if (err) throw err;
+						console.log("1 VUELO inserted");
+					});
 		});
 	
 });
 
 server.get('/aero/infoVuelo',function(req, res){
+	var nameAero = req.query.nameAero || '';
+	console.log(nameAero);
 	var vuelo = req.query.vueloI || '';
 	console.log(vuelo);
 	var origen = req.query.origenI || '';
 	console.log(origen);
 	var destino = req.query.destinoI || '';
 	console.log(destino);
+	var id;
 	
-	var sql = "SELECT * FROM vuelos WHERE vuelo = '"+vuelo+"' and origen = '"+origen+"' and destino = '"+destino+"'";
+	var sql = "SELECT id FROM aerolineas WHERE name = '"+nameAero+"'";
 		con.query(sql, function (err, result) {
 			if (err) throw err;
+			id = result[0].id;
+			var sql = "SELECT * FROM vuelos WHERE vuelo = '"+id+"-"+vuelo+"' and origen = '"+origen+"' and destino = '"+destino+"'";
+		con.query(sql, function (err, result) {
+			if (err) throw err;
+			/*if(result.length ==0){
+				res.send("ERROR");
+			}else{*/
 			res.setHeader('Content-Type', 'application/json');
 			res.end(JSON.stringify(result));
 		});
+		});
+	
+	
 	
 });
 
