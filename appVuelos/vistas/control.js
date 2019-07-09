@@ -181,6 +181,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		console.log($scope.carrito);
 		console.log($scope.carritoTipo);
 		$http.get("/aero/compra?"+
+                    "fechaV="+ $scope.selectedIda +
 					"compradorN="+ $scope.nombreCompradorN + 
 					"&compradorA="+ $scope.nombreCompradorA + 
 					"&tipo="+$scope.carritoTipo + 
