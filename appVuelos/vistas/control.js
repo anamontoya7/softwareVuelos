@@ -173,6 +173,11 @@ sesion1.controller("ctrl1", function ($scope, $http) {
     
     $scope.deshacer = function() {
         $scope.mostrarsolucion = true;
+        $scope.identificadorDelete = $scope.idvuelocancelacion;
+        console.log($scope.identificadorDelete);
+        $http.get("/aero/delete?"+
+                  "iddelete=" +$scope.identificadorDelete).then(function(response) {   
+        })
     }
     $scope.cancelaciongo = function() {
         $scope.mostrarsolucion = false;
@@ -182,7 +187,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		console.log($scope.carritoTipo);
 		$http.get("/aero/compra?"+
                     "fechaV="+ $scope.selectedIda +
-					"compradorN="+ $scope.nombreCompradorN + 
+					"&compradorN="+ $scope.nombreCompradorN + 
 					"&compradorA="+ $scope.nombreCompradorA + 
 					"&tipo="+$scope.carritoTipo + 
 					"&pasajeros="+$scope.pasajeros +
