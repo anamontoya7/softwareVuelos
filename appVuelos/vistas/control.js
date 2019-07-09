@@ -165,6 +165,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$scope.carrito = data;
 		$scope.carritoTipo = tipo;
 		$scope.carro = true;
+        $scope.mostrar = false;
 	}
 	
 	$scope.comprar = function() {
