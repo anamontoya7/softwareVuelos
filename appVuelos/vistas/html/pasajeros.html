@@ -75,7 +75,21 @@
 		</div>
 <!--==============================Content=================================-->
 		<div class="content" ng-app="sesion1" ng-controller="ctrl1"><div class="ic"></div>
+			<div class="container_12">			
+				<div class="clear"></div>
+				<div class="grid_6">
+                    <br>
+					<h3>Sección de cancelaciones</h3>
+					<form id="bookingForm" name="validateRegister">
+                    <br>
+                    Identificador de vuelo:<input type="text" ng-model="idvuelocancelacion" required>
+                    <button class="buttonForm" ng-click="deshacer()">Cancelar Compra</button>
+					</form>
+                    
+				</div>
+			</div>
 		</div>
+        
 <!--==============================footer=================================-->
 		<footer>
 			<div class="container_12">
