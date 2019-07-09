@@ -135,17 +135,12 @@ server.get('/aero/compra',function(req, res){
         con.query(sqlt, function (err, result) {
 		if (err) throw err;
         // En proceso
-         var sqlf = "UPDATE vuelos SET "+tipoStringss+" = '"+pasajeros+"'" WHERE cod_reserva = '"+valor+"'";
+        /*var sqlf = "UPDATE vuelos SET "+tipoStringss+" = "+tipoString+"+"+pasajeros+" WHERE cod_reserva = '"+valor+"'";
         con.query(sql, function (err, result) {
             if (err) throw err;
-        });
+        });*/
 	   });
 	});
-    
-	/*var sqlq = "INSERT INTO pasajeros (cod_reserva, numero, nombre, apellidos) VALUES ('1', '0', '"+compradorN+"','"+compradorA+"')";
-	con.query(sqlq, function (err, result) {
-		if (err) throw err;
-	});*/
     
     
 	sql = "UPDATE vuelos SET "+tipoString+" = "+tipoString+"-"+pasajeros+" WHERE origen = '"+origenO+"' AND destino = '"+destinoO+"' AND salida = '"+salidaO+"'";
@@ -163,6 +158,20 @@ server.get('/aero/compra',function(req, res){
 });
 
 
+
+server.get('/aero/delete',function(req, res){
+	var id = req.query.iddelete || '';
+	console.log(id);
+	var sql = "DELETE FROM pasajeros WHERE cod_reserva = '"+id+"'";
+		con.query(sql, function (err, result) {
+			if (err) throw err;
+		});
+    var sqlc = "DELETE FROM compras WHERE cod_reserva = '"+id+"'";
+		con.query(sqlc, function (err, result) {
+			if (err) throw err;
+		});
+	
+});
 
 ////prueba
 server.get('/aero/register',function(req, res){
