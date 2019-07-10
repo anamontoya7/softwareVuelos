@@ -157,35 +157,51 @@ server.get('/aero/delete',function(req, res){
 	var id = req.query.iddelete || '';
 	console.log(id);
 	
-	
-	
-	
-	
-	
-	
-	
-	sql = "UPDATE vuelos SET "+tipoString+" = "+tipoString+"+"+pasajeros+" WHERE origen = '"+origenO+"' AND destino = '"+destinoO+"' AND salida = '"+salidaO+"'";
-	con.query(sql, function (err, result) {
-		if (err) throw err;
-	});
-	sql = "UPDATE vuelos SET "+tipoString+" = "+tipoString+"+"+pasajeros+" WHERE origen = '"+origenD+"' AND destino = '"+destinoD+"' AND salida = '"+salidaD+"'";
-	con.query(sql, function (err, result) {
-		if (err) throw err;
-	});
-	
-	
+
+
+		var sql = "SELECT * FROM compras WHERE cod_reserva = '"+id+"'";
+		con.query(sql, function (err, result) {
+			if (err) throw err;
+
+			res.setHeader('Content-Type', 'application/json');
+			res.end(JSON.stringify(result));
+			
+			console.log(result);
+			
+			var tipoString = 'plazas_business';
+			var pasajeros = result[0].npas_businnes;
+			if(pasajeros == null){
+				tipoString = 'plazas_optima';
+				pasajeros = result[0].npas_optima;
+				if (pasajeros == null)
+					tipoString = 'plazas_economy';
+					pasajeros = result[0].npas_economy;
+			}
+			
+
+			
+				sql = "UPDATE vuelos SET "+tipoString+" = "+tipoString+"+"+pasajeros+" WHERE origen = '"+result[0].origen_origen+"' AND destino = '"+result[0].destino_origen+"' AND salida = '"+result[0].salida_origen+"'";
+				con.query(sql, function (err, result) {
+					if (err) throw err;
+				});
+				sql = "UPDATE vuelos SET "+tipoString+" = "+tipoString+"+"+pasajeros+" WHERE origen = '"+result[0].origen_destino+"' AND destino = '"+result[0].destino_destino+"' AND salida = '"+result[0].salida_destino+"'";
+				con.query(sql, function (err, result) {
+				if (err) throw err;
+				});
+			
+			 });
 	
 
 	
 	
-	var sql = "DELETE FROM pasajeros WHERE cod_reserva = '"+id+"'";
-		con.query(sql, function (err, result) {
-			if (err) throw err;
-		});
-    var sqlc = "DELETE FROM compras WHERE cod_reserva = '"+id+"'";
-		con.query(sqlc, function (err, result) {
-			if (err) throw err;
-		});
+//	var sql = "DELETE FROM pasajeros WHERE cod_reserva = '"+id+"'";
+//		con.query(sql, function (err, result) {
+//			if (err) throw err;
+//		});
+ //   var sqlc = "DELETE FROM compras WHERE cod_reserva = '"+id+"'";
+//		con.query(sqlc, function (err, result) {
+//			if (err) throw err;
+//		});
 	
 });
 
