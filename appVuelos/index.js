@@ -105,10 +105,10 @@ server.get('/aero/compra',function(req, res){
 	var salidaD = req.query.salidaD || '';
     var dat= new Date(); //fecha
     
-    *var tipoStringss = "npas_businnes";
+    var tipoStringss = "npas_businnes";
 	if(tipo = 2)
 		tipoStringss = "npas_optima";
-	else if(tipo = 3){
+	else if(tipo = 3)
 		tipoStringss = "npas_economy";
     
     var sql = "SELECT cod_reserva FROM pasajeros ORDER BY cod_reserva DESC";
