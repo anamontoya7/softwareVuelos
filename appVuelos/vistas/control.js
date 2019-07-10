@@ -64,6 +64,15 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	   // console.log(error);
 	// });
 		
+		
+		
+
+		$http.get("/aero/origenes").then(function(response) {
+			$scope.origenes = response.data;
+		})
+	
+		
+		
 	$scope.clickOrigen = function() {
 		$http.get("/aero/destinos?origen="+ $scope.selectedName).then(function(response) {
 			$scope.destinos = response.data;

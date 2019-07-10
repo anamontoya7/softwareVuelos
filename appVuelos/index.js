@@ -34,10 +34,32 @@ server.get('/html/aerolineas.html',function(req, res){
 });
 
 
+
+server.get('/aero/origenes',function(req, res){
+
+	
+	var sql = "Select DISTINCT(origen) FROM vuelos WHERE origen = '"+ciudadO+"' ORDER BY destino ASC";
+	
+	con.query(sql, function (err, result) {
+		if (err) throw err;
+		
+		var origenes = [];
+		
+		for (var i = 0; i < result.length; i++) {
+			origenes.push(result[i].origenes);
+		}
+		
+		res.setHeader('Content-Type', 'application/json');
+		res.end(JSON.stringify(origenes));
+	});
+});
+
+
+
 server.get('/aero/destinos',function(req, res){
 	var ciudadO = req.query.origen || '';
 	
-	var sql = "Select DISTINCT(destino) FROM vuelos WHERE origen = '"+ciudadO+"' ORDER BY destino ASC";
+	var sql = "Select origen FROM vuelos ORDER BY destino ASC";
 	
 	con.query(sql, function (err, result) {
 		if (err) throw err;
