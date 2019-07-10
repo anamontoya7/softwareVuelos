@@ -95,12 +95,7 @@ server.get('/aero/compra',function(req, res){
 	else if(tipo = 3)
 		tipoString = 'plazas_economy';
 	
-    var tipoStringss = 'npas_businnes';
-	if(tipo = 2)
-		tipoStringss = 'npas_optima';
-	else if(tipo = 3)
-		tipoStringss = 'npas_economy';
-    
+    console.log(tipoString);
 	var pasajeros = req.query.pasajeros || '';
 	var origenO = req.query.origenO || '';
 	var destinoO = req.query.destinoO || '';
@@ -108,12 +103,17 @@ server.get('/aero/compra',function(req, res){
 	var origenD = req.query.origenD || '';
 	var destinoD = req.query.destinoD || '';
 	var salidaD = req.query.salidaD || '';
-	 var dat= new Date(); //fecha
+    var dat= new Date(); //fecha
+    
+    *var tipoStringss = "npas_businnes";
+	if(tipo = 2)
+		tipoStringss = "npas_optima";
+	else if(tipo = 3){
+		tipoStringss = "npas_economy";
     
     var sql = "SELECT cod_reserva FROM pasajeros ORDER BY cod_reserva DESC";
 	con.query(sql, function (err, result) {
 		if (err) throw err;
-        //console.log(result);
         
         var ids = [];
         
@@ -122,7 +122,6 @@ server.get('/aero/compra',function(req, res){
 		}
         var valor = ids[0]+1;
          
-        console.log(valor);
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(valor));
         
@@ -131,14 +130,9 @@ server.get('/aero/compra',function(req, res){
 		if (err) throw err;
 	   });
         
-       var sqlt = "INSERT INTO compras (cod_reserva, fecha_compra, fecha_vuelo, vuelo, salida ) VALUES                                         ('"+valor+"','"+dat+"', '"+fecha_vuelo+"', '"+22+"','"+salidaD+"')";
+       var sqlt = "INSERT INTO compras (cod_reserva, fecha_compra, fecha_vuelo, vuelo, salida, "+tipoStringss+") VALUES ('"+valor+"','"+dat+"', '"+fecha_vuelo+"', '"+22+"','"+salidaD+"','"+pasajeros+"')";
         con.query(sqlt, function (err, result) {
 		if (err) throw err;
-        // En proceso
-        /*var sqlf = "UPDATE vuelos SET "+tipoStringss+" = "+tipoString+"+"+pasajeros+" WHERE cod_reserva = '"+valor+"'";
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-        });*/
 	   });
 	});
     
@@ -173,7 +167,7 @@ server.get('/aero/delete',function(req, res){
 	
 });
 
-////prueba
+
 server.get('/aero/register',function(req, res){
 	var id = req.query.id || '';
 	console.log(id);
