@@ -37,3 +37,15 @@ button:hover {
 #noFlies{
 				color:red;
 }
+
+#tableInfo {  color: #333; font-family: Helvetica, Arial, sans-serif; width: 1000px; border-collapse: collapse;}
+
+#tableInfo	td, th { border: 1px solid transparent; height: 30px; }
+
+#tableInfo	th { background: #D3D3D3; font-weight: bold; }
+
+#tableInfo	td { background: #FAFAFA; text-align: center; }
+#tableInfo	tr:nth-child(even) td { background: #F1F1F1; }  
+
+#tableInfo	tr:nth-child(odd) td { background: #FEFEFE; } 
+#tableInfo	tr:hover td { background: #d0dafd; color: #339; }

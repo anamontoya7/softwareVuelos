@@ -80,25 +80,39 @@
 				<div class="clear"></div>
 				<div class="grid_6">
 					<h3>Informacion</h3>
-					<form id="bookingForm" name="infoForm">
+					<form class="bookingForm" name="infoForm">
                         Vuelo:<input type="text" ng-model="vueloInfo" required>
-                        Origen:<input type="text" ng-model="origenInfo" >
-                        Destino:<input type="text" ng-model="destinoInfo" >
 						<button class="buttonForm" ng-click="info()" ng-disabled="infoForm.$invalid || infoForm.$pristine">INFO</button><br>
 					</form>
 				</div>
+				
+				<div class="grid_5 prefix_1">
+					<h4></h4><br><br><br>
+					<p>¿Desea consultar información relativa a sus vuelos? Simplemente introduzca el número de vuelo, origen y destino</p>
+				</div>
 			</div>
+			
 			
 			<div class="container_12" ng-show="mostrarINFO">			
 				<div class="clear"></div>
 				<div class="grid_12">
 					<h3>Vuelos</h3>
-					<table class="table" style="padding: 8px;">
+					<div class="grid_2">
+						<h6>
+							<img src= "https://image.flaticon.com/icons/svg/59/59919.svg" height="25" width="25">  {{informacion.vuelo}}
+						</h6>
+					</div>
+					<div class="grid_8">
+						<h6>
+							{{informacion.origen}}<img src= "https://image.flaticon.com/icons/svg/876/876784.svg" height="25" width="25">  {{informacion.destino}}
+						</h6>
+					</div> 
+						
+				
+					<br><br>
+					<table id="tableInfo" class="table" style="padding: 8px;">
 					   <thead>
 						  <tr>
-							 <td>Vuelo</td>
-							 <td>Origen</td>
-							 <td>Destino</td>
 							 <td>Salida</td>
 							 <td>Llegada</td>
 							 <td>Precio Business</td>
@@ -110,17 +124,14 @@
 						  </tr>
 					   </thead>
 					   <tbody>
-						  <tr ng-repeat="h in vuelosI">
-							 <td>{{h.vuelo}}</td>
-                             <td>{{h.origen}}</td>
-                             <td>{{h.destino}}</td>
-                             <td>{{h.llegada}}</td>
+						  <tr ng-repeat="h in vuelosInfo">
                              <td>{{h.salida}}</td>
-                             <td>{{h.precio_business}}</td>
+                             <td>{{h.llegada}}</td>
+                             <td>{{h.precio_business}} €</td>
 							 <td>{{h.plazas_business}}</td>
-                             <td>{{h.precio_optima}}</td>
+                             <td>{{h.precio_optima}} €</td>
 							 <td>{{h.plazas_optima}}</td>
-							 <td>{{h.precio_economy}}</td>
+							 <td>{{h.precio_economy}} €</td>
 							 <td>{{h.plazas_economy}}</td>
 						  </tr>
 					   </tbody>

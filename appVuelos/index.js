@@ -187,8 +187,6 @@ server.get('/aero/register',function(req, res){
         con.query(sql, function (err, result) {
             if (err) throw err;
 			result1=JSON.stringify(result);
-			console.log("ressss");
-			console.log(result1);
         });
     
     var sql = "INSERT INTO aerolineas (id, name, passwd) SELECT '"+ id +"', '"+name+"','"+pass+"' FROM dual WHERE NOT EXISTS (SELECT * FROM aerolineas WHERE name ='"+name+"' or id='"+id+"')";
@@ -257,6 +255,15 @@ server.get('/aero/registerVuelo',function(req, res){
 	console.log(plazasE);
 	var id;
 	
+	var result1 = [];
+	var result2 = [];
+	var sql = "SELECT COUNT(*) FROM vuelos";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+			console.log(result);
+			result1=JSON.stringify(result);
+        });
+	
 	var sql = "SELECT id FROM aerolineas WHERE name = '"+nameAero+"'";
 		con.query(sql, function (err, result) {
 			if (err) throw err;
@@ -269,8 +276,19 @@ server.get('/aero/registerVuelo',function(req, res){
 						if (err) throw err;
 						console.log("1 VUELO inserted");
 					});
+			var sql = "SELECT COUNT(*) FROM vuelos";
+			con.query(sql, function (err, result) {
+				if (err) throw err;
+				console.log(result);
+				result2=JSON.stringify(result);
+				if(result1==result2){
+					res.send("Lo sentimos, el vuelo no se ha podido registrar, vuelva a intentarlo");
+				}else{
+					res.send("Vuelo registrado, correctamente");
+				}
+			});
 		});
-	
+
 });
 
 server.get('/aero/infoVuelo',function(req, res){
@@ -278,17 +296,13 @@ server.get('/aero/infoVuelo',function(req, res){
 	console.log(nameAero);
 	var vuelo = req.query.vueloI || '';
 	console.log(vuelo);
-	var origen = req.query.origenI || '';
-	console.log(origen);
-	var destino = req.query.destinoI || '';
-	console.log(destino);
 	var id;
 	
 	var sql = "SELECT id FROM aerolineas WHERE name = '"+nameAero+"'";
 		con.query(sql, function (err, result) {
 			if (err) throw err;
 			id = result[0].id;
-			var sql = "SELECT * FROM vuelos WHERE vuelo = '"+id+"-"+vuelo+"' and origen = '"+origen+"' and destino = '"+destino+"'";
+			var sql = "SELECT * FROM vuelos WHERE vuelo = '"+id+"-"+vuelo+"'";
 		con.query(sql, function (err, result) {
 			if (err) throw err;
 			/*if(result.length ==0){

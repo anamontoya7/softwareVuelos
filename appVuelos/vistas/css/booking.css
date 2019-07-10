@@ -45,7 +45,7 @@
     width: 100%;
 }
 
-#bookingForm textarea {
+.bookingForm textarea {
   min-height: 143px;
   resize: none;
   padding-top: 10px !important;
@@ -68,7 +68,7 @@
   margin-right: 47px;
 }
 
-#bookingForm {
+.bookingForm {
   position: relative;
   display: block;
   padding-top: 5px;
@@ -76,8 +76,8 @@
   color: #737272;
   font: 14px/20px 'Open Sans', sans-serif;
 }
-#bookingForm input,
-#bookingForm textarea {
+.bookingForm input,
+.bookingForm textarea {
   outline: none;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -94,7 +94,7 @@
 }
 
 
-#bookingForm input::-webkit-input-placeholder { 
+.bookingForm input::-webkit-input-placeholder { 
   color: #737272; 
 }
 
@@ -106,17 +106,17 @@ input::-moz-placeholder,
 textarea::-moz-placeholder
 {color:#737272;}
 
-#bookingForm input:focus,
-#bookingForm textarea:focus {
+.bookingForm input:focus,
+.bookingForm textarea:focus {
   background: #fff;
 }
 
-#bookingForm a.btn {
+.bookingForm a.btn {
   margin-top: 16px;
   padding-left: 21px;
   padding-right: 21px;
 }
-#bookingForm a.btn:hover {
+.bookingForm a.btn:hover {
 }
 .controlHolder {
   position: relative;
@@ -380,7 +380,7 @@ textarea::-moz-placeholder
   margin-bottom: 20px;
 }
 
-#bookingForm>strong {
+.bookingForm>strong {
   display: block;
   font-weight: normal;
   float: left;
@@ -388,7 +388,7 @@ textarea::-moz-placeholder
 }
 
 
-#bookingForm>strong+.controlHolder {
+.bookingForm>strong+.controlHolder {
   width: 336px;
   float: right;
   padding-top: 1px;

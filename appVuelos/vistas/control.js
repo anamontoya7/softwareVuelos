@@ -44,6 +44,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 	$scope.precioER = [];
 	$scope.plazasER = [];
 	$scope.vuelosI = [];
+	$scope.vuelosInfo = [];
 	$scope.mostrarINFO = false;
 	$scope.noINFO = false;
     $scope.identificador;
@@ -278,23 +279,44 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 		$http.get("/aero/registerVuelo?nameAero="+cookie+"&vueloR="+ $scope.vueloR + "&origenR="+$scope.origenR +"&destinoR="+$scope.destinoR+"&salidaR="+salida+"&llegadaR="
 			+llegada+"&precioBR="+$scope.precioBR+"&plazasBR="+$scope.plazasBR+"&precioOR="+$scope.precioOR+"&plazasOR="+$scope.plazasOR
 			+"&precioER="+$scope.precioER+"&plazasER="+$scope.plazasER).then(function(response) {
-			alert("El vuelo ha sido registrado");
+			alert(response.data);
 		})
 	}
 	
 	$scope.info = function(){
-		$scope.vuelosI.length = 0;
+		$scope.vuelosInfo.length = 0;
 		console.log("info");
 		var cookie = readCookie("id");
 		console.log(cookie);
 		$scope.vueloI = $scope.vueloInfo;
 		console.log($scope.vueloI);
-		$scope.origenI = $scope.origenInfo;
-		console.log($scope.origenI);
-		$scope.destinoI = $scope.destinoInfo;
-		console.log($scope.destinoI);
-		$http.get("/aero/infoVuelo?nameAero="+cookie+"&vueloI="+ $scope.vueloI + "&origenI="+$scope.origenI +"&destinoI="+$scope.destinoI).then(function(response) {
+		
+		$http.get("/aero/infoVuelo?nameAero="+cookie+"&vueloI="+ $scope.vueloI).then(function(response) {
 			$scope.vuelosI = response.data;
+			
+			for(var i = 0; i < $scope.vuelosI.length; i++) {
+				$scope.informacion = {	"vuelo" : $scope.vuelosI[i].vuelo,
+										"origen" : $scope.vuelosI[i].origen,
+										"destino" : $scope.vuelosI[i].destino,
+				}
+				var date_salida = new Date($scope.vuelosI[i].salida);
+				var fecha_salida = date_salida.getDate()+"-"+(date_salida.getMonth()+1)+"-"+date_salida.getFullYear();
+				var hora_salida = date_salida.getHours() + ":" + date_salida.getMinutes();
+				var date_llegada = new Date($scope.vuelosI[i].llegada);
+				var fecha_llegada = date_llegada.getDate()+"-"+(date_llegada.getMonth()+1)+"-"+date_llegada.getFullYear();
+				var hora_llegada = date_llegada.getHours() + ":" + date_llegada.getMinutes();
+
+				$scope.vuelosInfo[i]={		 	"salida" : fecha_salida +" / "+hora_salida, 
+												"llegada" : fecha_llegada + " / " +hora_llegada, 
+												"precio_business" : $scope.vuelosI[i].precio_business, 
+												"precio_optima" : $scope.vuelosI[i].precio_optima, 
+												"precio_economy" : $scope.vuelosI[i].precio_economy, 
+												"plazas_business" : $scope.vuelosI[i].plazas_business, 
+												"plazas_optima" : $scope.vuelosI[i].plazas_optima, 
+												"plazas_economy" : $scope.vuelosI[i].plazas_economy
+											};
+			}
+			
 			if($scope.vuelosI.length==0){
 				$scope.mostrarINFO = false;
 				$scope.noINFO = true;

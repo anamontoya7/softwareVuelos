@@ -79,7 +79,7 @@
 				<div class="clear"></div>
 				<div class="grid_6">
 					<h3>Registrese</h3>
-					<form id="bookingForm" name="validateRegister">
+					<form class="bookingForm" name="validateRegister">
                         Id:<input type="text" ng-model="idAero" required>
                         Aerolinea:<input type="text" ng-model="nameAero" required>
                         Contraseña:<input type="password" ng-model="passAero" required>
@@ -87,9 +87,9 @@
 					</form>
                     
 				</div>
-				<div class="grid_6">
+				<div class="grid_5 prefix_1">
 					<h3>Inicio de sesión</h3>
-					<form id="bookingForm" name="validateSesion">
+					<form class="bookingForm" name="validateSesion">
                         Aerolinea:<input type="text" ng-model="nameAeroS" required>
                         Contraseña:<input type="password" ng-model="passAeroS" required>
 						<button class="buttonForm" ng-click="sesionAero()" ng-disabled="validateSesion.$invalid || validateSesion.$pristine">Iniciar</button><br>
