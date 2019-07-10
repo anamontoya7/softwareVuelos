@@ -38,7 +38,7 @@ server.get('/html/aerolineas.html',function(req, res){
 server.get('/aero/origenes',function(req, res){
 
 	
-	var sql = "Select DISTINCT(origen) FROM vuelos WHERE origen = '"+ciudadO+"' ORDER BY destino ASC";
+	var sql = "Select origen FROM vuelos ORDER BY destino ASC";
 	
 	con.query(sql, function (err, result) {
 		if (err) throw err;
@@ -59,7 +59,7 @@ server.get('/aero/origenes',function(req, res){
 server.get('/aero/destinos',function(req, res){
 	var ciudadO = req.query.origen || '';
 	
-	var sql = "Select origen FROM vuelos ORDER BY destino ASC";
+	var sql = "Select DISTINCT(origen) FROM vuelos WHERE origen = '"+ciudadO+"' ORDER BY destino ASC";
 	
 	con.query(sql, function (err, result) {
 		if (err) throw err;
