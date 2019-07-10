@@ -69,6 +69,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
 
 		$http.get("/aero/origenes").then(function(response) {
 			$scope.origenes = response.data;
+			console.log($scope.origenes);
 		})
 	
 		
