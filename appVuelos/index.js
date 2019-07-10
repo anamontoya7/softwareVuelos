@@ -46,7 +46,7 @@ server.get('/aero/origenes',function(req, res){
 		var origenes = [];
 		
 		for (var i = 0; i < result.length; i++) {
-			origenes.push(result[i].origenes);
+			origenes.push(result[i].origen);
 		}
 		
 		res.setHeader('Content-Type', 'application/json');
@@ -59,7 +59,7 @@ server.get('/aero/origenes',function(req, res){
 server.get('/aero/destinos',function(req, res){
 	var ciudadO = req.query.origen || '';
 	
-	var sql = "Select DISTINCT(origen) FROM vuelos WHERE origen = '"+ciudadO+"' ORDER BY destino ASC";
+	var sql = "Select DISTINCT(destino) FROM vuelos WHERE origen = '"+ciudadO+"' ORDER BY destino ASC";
 	
 	con.query(sql, function (err, result) {
 		if (err) throw err;
