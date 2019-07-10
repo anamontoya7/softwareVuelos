@@ -130,7 +130,7 @@ server.get('/aero/compra',function(req, res){
 		if (err) throw err;
 	   });
         
-       var sqlt = "INSERT INTO compras (cod_reserva, fecha_compra, fecha_vuelo, vuelo, salida, "+tipoStringss+") VALUES ('"+valor+"','"+dat+"', '"+fecha_vuelo+"', '"+22+"','"+salidaD+"','"+pasajeros+"')";
+       var sqlt = "INSERT INTO compras (cod_reserva, fecha_compra, "+tipoStringss+", origen_origen, destino_origen, salida_origen, origen_destino, destino_destino, salida_destino) VALUES ('"+valor+"','"+dat+"', '"+pasajeros+"', '"+origenO+"', '"+destinoO+"', '"+salidaO+"', '"+origenD+"', '"+destinoD+"', '"+salidaD+"')";
         con.query(sqlt, function (err, result) {
 		if (err) throw err;
 	   });
@@ -156,6 +156,28 @@ server.get('/aero/compra',function(req, res){
 server.get('/aero/delete',function(req, res){
 	var id = req.query.iddelete || '';
 	console.log(id);
+	
+	
+	
+	
+	
+	
+	
+	
+	sql = "UPDATE vuelos SET "+tipoString+" = "+tipoString+"+"+pasajeros+" WHERE origen = '"+origenO+"' AND destino = '"+destinoO+"' AND salida = '"+salidaO+"'";
+	con.query(sql, function (err, result) {
+		if (err) throw err;
+	});
+	sql = "UPDATE vuelos SET "+tipoString+" = "+tipoString+"+"+pasajeros+" WHERE origen = '"+origenD+"' AND destino = '"+destinoD+"' AND salida = '"+salidaD+"'";
+	con.query(sql, function (err, result) {
+		if (err) throw err;
+	});
+	
+	
+	
+
+	
+	
 	var sql = "DELETE FROM pasajeros WHERE cod_reserva = '"+id+"'";
 		con.query(sql, function (err, result) {
 			if (err) throw err;

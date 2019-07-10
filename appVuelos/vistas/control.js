@@ -176,6 +176,7 @@ sesion1.controller("ctrl1", function ($scope, $http) {
     $scope.deshacer = function() {
         $scope.mostrarsolucion = true;
         $scope.identificadorDelete = $scope.idvuelocancelacion;
+		
         console.log($scope.identificadorDelete);
         $http.get("/aero/delete?"+
                   "iddelete=" +$scope.identificadorDelete).then(function(response) {   
