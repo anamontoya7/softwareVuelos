@@ -194,14 +194,14 @@ server.get('/aero/delete',function(req, res){
 
 	
 	
-//	var sql = "DELETE FROM pasajeros WHERE cod_reserva = '"+id+"'";
-//		con.query(sql, function (err, result) {
-//			if (err) throw err;
-//		});
- //   var sqlc = "DELETE FROM compras WHERE cod_reserva = '"+id+"'";
-//		con.query(sqlc, function (err, result) {
-//			if (err) throw err;
-//		});
+	var sql = "DELETE FROM pasajeros WHERE cod_reserva = '"+id+"'";
+		con.query(sql, function (err, result) {
+			if (err) throw err;
+		});
+   var sqlc = "DELETE FROM compras WHERE cod_reserva = '"+id+"'";
+		con.query(sqlc, function (err, result) {
+			if (err) throw err;
+		});
 	
 });
 
