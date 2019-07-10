@@ -50,19 +50,19 @@ sesion1.controller("ctrl1", function ($scope, $http) {
     $scope.identificador;
     $scope.valor;
     
-   $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
-	   $scope.user = archivo.data;
+   // $http({method: 'GET',url: "vuelos.json"}).then(function (archivo) {
+	   // $scope.user = archivo.data;
 	   
-		   for(var i = 0; i < $scope.user.vuelos.length; i++){
-			   $scope.vuelo = $scope.user.vuelos[i];
-			   $scope.origen[i] = $scope.vuelo["origen"];
-		   }
-		$scope.origenes = $scope.origen.unique().sort();
+		   // for(var i = 0; i < $scope.user.vuelos.length; i++){
+			   // $scope.vuelo = $scope.user.vuelos[i];
+			   // $scope.origen[i] = $scope.vuelo["origen"];
+		   // }
+		// $scope.origenes = $scope.origen.unique().sort();
 	
-	},function (error){
-	   $scope.user = [{name: "Error!! " + error.status}];
-	   console.log(error);
-	});
+	// },function (error){
+	   // $scope.user = [{name: "Error!! " + error.status}];
+	   // console.log(error);
+	// });
 		
 	$scope.clickOrigen = function() {
 		$http.get("/aero/destinos?origen="+ $scope.selectedName).then(function(response) {
