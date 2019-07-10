@@ -90,9 +90,9 @@ server.get('/aero/compra',function(req, res){
 	var compradorA = req.query.compradorA || '';
 	var tipo = req.query.tipo || '';
 	var tipoString = 'plazas_business';
-	if(tipo = 2)
+	if(tipo == 2)
 		tipoString = 'plazas_optima';
-	else if(tipo = 3)
+	else if(tipo == 3)
 		tipoString = 'plazas_economy';
 	
     console.log(tipoString);
@@ -106,9 +106,9 @@ server.get('/aero/compra',function(req, res){
     var dat= new Date(); //fecha
     
     var tipoStringss = "npas_businnes";
-	if(tipo = 2)
+	if(tipo == 2)
 		tipoStringss = "npas_optima";
-	else if(tipo = 3)
+	else if(tipo == 3)
 		tipoStringss = "npas_economy";
     
     var sql = "SELECT cod_reserva FROM pasajeros ORDER BY cod_reserva DESC";
